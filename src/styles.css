@@ -1038,3 +1038,129 @@ textarea {
     background: radial-gradient(ellipse at center, #35415033, transparent 72%);
   }
 }
+
+.place-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 18px 14px;
+}
+.place-choices[hidden] {
+  display: none;
+}
+.place-choices button {
+  min-height: 44px;
+  font-size: 12px;
+  flex: 1;
+}
+#taskTray {
+  width: 460px;
+  max-height: 85dvh;
+  overflow-y: auto;
+}
+.tray-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tray-header h2 {
+  margin: 0 0 6px;
+}
+#trayCount,
+#trayDescription {
+  font-size: 12px;
+  color: #a9a2bb;
+  line-height: 1.6;
+}
+#closeTray {
+  min-width: 44px;
+  min-height: 44px;
+}
+.tray-task {
+  margin: 12px 0;
+  padding: 14px;
+  background: #171722;
+  border: 1px solid #3d374b;
+  border-radius: 12px;
+}
+.tray-edit {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: none;
+  padding: 0;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.tray-edit span {
+  display: block;
+  font-size: 10px;
+  color: #a79abd;
+  margin-top: 5px;
+}
+.tray-fields {
+  display: flex;
+  gap: 10px;
+}
+.tray-fields label {
+  flex: 1;
+  min-width: 0;
+}
+.tray-fields select {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 6px;
+  padding: 8px;
+  font-size: 13px;
+  color: #ddd3ee;
+  border: 1px solid #4e435f;
+  background: #292333;
+  border-radius: 7px;
+}
+.tray-advance {
+  min-height: 44px;
+  margin-top: 6px;
+  width: 100%;
+  color: #c6dfcb;
+  background: #27372e;
+  border-color: #47614f;
+}
+.tray-feedback {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: #b7cfb9;
+}
+.tray-feedback button {
+  min-height: 44px;
+}
+#trayNew {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 14px;
+}
+.tray-empty {
+  font-size: 14px;
+  color: #aaa1ba;
+  line-height: 1.6;
+  padding: 20px 0;
+}
+@media (max-width: 720px) {
+  #taskTray {
+    width: 100%;
+    max-height: 85dvh;
+  }
+  .tray-fields select {
+    font-size: 16px;
+  }
+  #places {
+    display: inline-block;
+  }
+  .place-choices {
+    flex-shrink: 0;
+  }
+}

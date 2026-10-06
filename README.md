@@ -19,7 +19,8 @@ Open the local URL printed by Vite. Use `npm run build` to create `dist/`, then 
 - Click a card to edit its title, notes, priority, assignee, or column.
 - Use **Start work**, **Complete**, or **Reopen** on a card for a one-tap status change. **Move to…** sends it directly to any other column, with **Undo** available after a move.
 - Drag cards between columns on desktop, or use the same direct controls.
-- Hover a colleague, tap their character, or select their roster entry to inspect tasks.
+- Hover a colleague for a summary. Tap their character or roster entry to manage assignments in a task tray, including status, reassignment, and preassigned task creation.
+- Tap desks for their active tasks, the conference table for pending tasks, or Michael’s desk/inbox for completed work. **Places** provides accessible buttons for the same views. Tray changes include an Undo action.
 - Collapse the board or pause the simulation using the header and scene controls.
 - On phones, switch between **Office** and **Tasks** using the bottom navigation. Select a column above the full-width task cards.
 - Use **Zoom** to explore the office by scrolling, then **Fit office** to see the complete floor plan. Tap any of the five colleagues below the scene to inspect their work.

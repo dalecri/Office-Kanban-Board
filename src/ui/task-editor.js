@@ -38,7 +38,7 @@ function drawChoices() {
     'agent',
   );
 }
-export function openTask(id = null, col = 'todo') {
+export function openTask(id = null, col = 'todo', agent = null) {
   editing = id;
   draft = {
     ...(tasks.find((t) => t.id === id) || {
@@ -46,7 +46,7 @@ export function openTask(id = null, col = 'todo') {
       note: '',
       col,
       priority: 'medium',
-      agent: null,
+      agent,
     }),
   };
   $('modalTitle').textContent = id ? 'Edit task' : 'New task';

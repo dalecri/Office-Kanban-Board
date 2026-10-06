@@ -1,3 +1,5 @@
+import { openTray } from './task-tray.js';
+import { hotspotAt, scenePoint } from '../office/hotspots.js';
 import { isMobile } from './mobile.js';
 import { $, esc } from './dom.js';
 import { tasks, AGENTS, ui } from '../state.js';
@@ -6,6 +8,23 @@ import { stateName, stateColor } from '../office/agents.js';
 import { drawVAgent } from '../office/characters.js';
 export function initInspector() {
   const canvas = $('scene');
+  $('places').onclick = () => {
+    const showing = $('placeChoices').hidden;
+    $('placeChoices').hidden = !showing;
+    $('places').setAttribute('aria-expanded', String(showing));
+  };
+  const places = {
+    work: {
+      title: 'Office desks',
+      col: 'doing',
+      description: 'Everyone’s work in progress.',
+    },
+    meeting: { title: 'Conference table', col: 'pending' },
+    inbox: { title: 'Michael’s inbox', col: 'done' },
+  };
+  document
+    .querySelectorAll('[data-place]')
+    .forEach((b) => (b.onclick = () => openTray(places[b.dataset.place])));
   function tip(a, cx, cy) {
     const mine = tasks.filter((t) => t.agent === a.id),
       active =
@@ -42,6 +61,8 @@ export function initInspector() {
   canvas.onpointermove = (e) => {
     if (e.pointerType === 'touch') return;
     const a = hit(e);
+    canvas.style.cursor =
+      a || hotspotAt(scenePoint(canvas, e)) ? 'pointer' : 'default';
     if (a) tip(a, e.clientX, e.clientY);
     else $('tooltip').hidden = true;
   };
@@ -51,8 +72,12 @@ export function initInspector() {
   canvas.onclick = (e) => {
     const a = hit(e);
     ui.selected = a?.id ?? null;
-    if (a) tip(a, e.clientX, e.clientY);
-    else $('tooltip').hidden = true;
+    if (a) openTray({ agent: a.id });
+    else {
+      $('tooltip').hidden = true;
+      const place = hotspotAt(scenePoint(canvas, e));
+      if (place) openTray(place);
+    }
   };
   AGENTS.forEach((a) => {
     const b = document.createElement('button');
@@ -62,15 +87,8 @@ export function initInspector() {
     const c = b.querySelector('canvas').getContext('2d');
     drawVAgent(c, { ...a, x: 19, y: 42 }, 0, true);
     b.onclick = () => {
-      ui.selected = ui.selected === a.id ? null : a.id;
-      document
-        .querySelectorAll('.person')
-        .forEach((x) => x.classList.remove('selected'));
-      if (ui.selected !== null) {
-        b.classList.add('selected');
-        const r = b.getBoundingClientRect();
-        tip(a, r.left, r.top - 180);
-      } else $('tooltip').hidden = true;
+      ui.selected = a.id;
+      openTray({ agent: a.id });
     };
     $('roster').append(b);
   });

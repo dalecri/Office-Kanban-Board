@@ -1,3 +1,4 @@
+import { initTaskTray } from './ui/task-tray.js';
 import { initMobile } from './ui/mobile.js';
 import { $ } from './ui/dom.js';
 import { ui } from './state.js';
@@ -12,6 +13,7 @@ async function main() {
   renderBoard();
   initMobile();
   initTaskEditor();
+  initTaskTray();
   initInspector();
   document.addEventListener('taskschange', renderBoard);
   $('pause').onclick = () => {

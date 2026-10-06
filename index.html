@@ -55,9 +55,25 @@
               ＋ Zoom
             </button>
             <button id="pause">Ⅱ Pause</button
+            ><button
+              id="places"
+              aria-expanded="false"
+              aria-controls="placeChoices"
+            >
+              ⌖ Places</button
             ><span id="activity">Everyone is settling in.</span
-            ><span class="hint">Hover a colleague to see their work</span>
+            ><span class="hint">Tap a colleague or desk to manage tasks</span>
           </div>
+          <nav
+            id="placeChoices"
+            class="place-choices"
+            aria-label="Office task locations"
+            hidden
+          >
+            <button data-place="work">Desks · In progress</button>
+            <button data-place="meeting">Conference · Pending</button>
+            <button data-place="inbox">Inbox · Done</button>
+          </nav>
         </section>
         <aside class="drawer" id="drawer">
           <div class="board-head">
@@ -96,6 +112,26 @@
     </main>
     <div id="tooltip" class="tooltip" hidden></div>
     <div id="toast" class="toast" role="status" hidden></div>
+    <dialog
+      id="taskTray"
+      aria-labelledby="trayTitle"
+      aria-describedby="trayDescription"
+    >
+      <div class="tray-header">
+        <div>
+          <h2 id="trayTitle">Tasks</h2>
+          <span id="trayCount"></span>
+        </div>
+        <button id="closeTray" aria-label="Close task tray">✕</button>
+      </div>
+      <p id="trayDescription"></p>
+      <div id="trayTasks"></div>
+      <div class="tray-feedback">
+        <span id="trayFeedback" role="status"></span
+        ><button id="trayUndo" hidden>Undo</button>
+      </div>
+      <button id="trayNew" class="primary">+ Add task here</button>
+    </dialog>
     <dialog id="modal">
       <form id="form">
         <h2 id="modalTitle">New task</h2>
