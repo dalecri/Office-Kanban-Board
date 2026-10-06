@@ -17,7 +17,8 @@ Open the local URL printed by Vite. Use `npm run build` to create `dist/`, then 
 
 - Create tasks with **New Task** or a column's **+** button.
 - Click a card to edit its title, notes, priority, assignee, or column.
-- Drag cards between columns on desktop. On touchscreens, select a column in the task editor.
+- Use **Start work**, **Complete**, or **Reopen** on a card for a one-tap status change. **Move to…** sends it directly to any other column, with **Undo** available after a move.
+- Drag cards between columns on desktop, or use the same direct controls.
 - Hover a colleague, tap their character, or select their roster entry to inspect tasks.
 - Collapse the board or pause the simulation using the header and scene controls.
 - On phones, switch between **Office** and **Tasks** using the bottom navigation. Select a column above the full-width task cards.

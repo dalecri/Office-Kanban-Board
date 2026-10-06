@@ -2,19 +2,31 @@ import { $ } from '../ui/dom.js';
 import { AGENTS, ui } from '../state.js';
 import { update, confetti, stateName, stateColor } from './agents.js';
 import { px } from './drawing.js';
-import { scene } from './scene.js';
+import { scene, sceneAccents } from './scene.js';
 import { drawVAgent } from './characters.js';
 export function startSimulation() {
   const canvas = $('scene'),
     ctx = canvas.getContext('2d');
   ctx.scale(2, 2);
   ctx.imageSmoothingEnabled = false;
+  // Cache the architecture once; only people and tiny live props animate.
+  const background = document.createElement('canvas');
+  background.width = 1440;
+  background.height = 1064;
+  const backgroundContext = background.getContext('2d');
+  backgroundContext.scale(2, 2);
+  backgroundContext.imageSmoothingEnabled = false;
+  scene(backgroundContext, 0);
   let last = 0,
     tick = 0,
     reported = false;
   function loop(now) {
     requestAnimationFrame(loop);
     try {
+      if (document.hidden) {
+        last = now;
+        return;
+      }
       const rawDt = last ? Math.min(now - last, 100) : 16.67;
       last = now;
       const dt = rawDt / (1000 / 60);
@@ -40,8 +52,14 @@ export function startSimulation() {
           if (p.life > p.maxLife) confetti.splice(i, 1);
         }
       }
+      if (
+        window.matchMedia('(max-width: 720px)').matches &&
+        document.body.dataset.mobileView === 'tasks'
+      )
+        return;
       ctx.clearRect(0, 0, 720, 532);
-      scene(ctx, tick);
+      ctx.drawImage(background, 0, 0, 720, 532);
+      sceneAccents(ctx, tick);
       [...AGENTS]
         .sort((a, b) => a.y - b.y)
         .forEach((a) => drawVAgent(ctx, a, tick));

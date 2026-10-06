@@ -72,6 +72,10 @@
             aria-label="Task columns"
           ></nav>
           <div class="board" id="board" data-active-column="todo"></div>
+          <div id="moveNotice" class="move-notice" role="status" hidden>
+            <span id="moveMessage"></span
+            ><button id="undoMove" type="button">Undo</button>
+          </div>
           <div class="board-footer">
             <span id="complete"></span>
             <div class="progress"><i id="progress"></i></div>

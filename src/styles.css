@@ -960,3 +960,81 @@ textarea {
     transition: none !important;
   }
 }
+
+/* Direct status controls: no editor round trip to move a card. */
+.task-card {
+  margin-bottom: 10px;
+  border: 1px solid #ffffff15;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #20212d;
+}
+.task-card .card {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.card-actions {
+  display: flex;
+  gap: 6px;
+  padding: 7px;
+  border-top: 1px solid #ffffff0c;
+}
+.card-actions select,
+.card-actions button {
+  min-width: 0;
+  min-height: 36px;
+  flex: 1;
+  font-size: 10px;
+  padding: 6px;
+  border: 1px solid #494255;
+  border-radius: 6px;
+  color: #c8bedb;
+  background: #292634;
+}
+.card-actions button {
+  color: #b9d4c7;
+  border-color: #3c514b;
+  background: #26332f;
+}
+.move-notice {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 18px;
+  gap: 8px;
+  background: #27372f;
+  color: #c5ddcc;
+  font-size: 12px;
+}
+.move-notice[hidden] {
+  display: none;
+}
+.move-notice button {
+  min-height: 44px;
+  background: transparent;
+  border-color: #536f60;
+}
+@media (max-width: 720px) {
+  .card-actions {
+    gap: 10px;
+    padding: 10px;
+  }
+  .card-actions select,
+  .card-actions button {
+    min-height: 44px;
+    font-size: 13px;
+    padding: 10px;
+  }
+  .card-actions select {
+    font-size: 16px;
+  }
+  .task-card .card-title {
+    margin-bottom: 10px;
+  }
+  .scene-wrap {
+    background: radial-gradient(ellipse at center, #35415033, transparent 72%);
+  }
+}

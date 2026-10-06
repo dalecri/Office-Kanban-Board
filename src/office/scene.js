@@ -9,6 +9,15 @@ function drawCheckers(c, x, y, w, h, a, b, s = 16) {
       px(c, (ix / s + iy / s) % 2 ? a : b, x + ix, y + iy, s, s);
   c.restore();
 }
+function rug(c, x, y, w, h, color, trim) {
+  px(c, '#11172235', x + 3, y + 4, w, h);
+  px(c, trim, x, y, w, h);
+  px(c, color, x + 2, y + 2, w - 4, h - 4);
+  for (let i = 8; i < w - 6; i += 10) {
+    px(c, trim + '55', x + i, y + 5, 4, 1);
+    px(c, trim + '55', x + i, y + h - 6, 4, 1);
+  }
+}
 function plant(c, x, y) {
   px(c, '#171f29', x - 9, y + 3, 20, 11);
   px(c, '#9fa7b2', x - 7, y, 15, 10);
@@ -28,11 +37,14 @@ function chair(c, x, y, col = '#694752') {
   px(c, '#303341', x - 8, y + 19, 17, 3);
 }
 function desk(c, x, y, w = 85, h = 35) {
+  px(c, '#0b152b30', x + 5, y + 9, w + 5, h + 15);
   px(c, '#151b28', x - 3, y - 3, w + 6, h + 18);
   px(c, '#667f88', x, y + 4, w, h + 7);
   px(c, '#c7b996', x, y, w, h);
   px(c, '#e2d4b2', x, y, w, 3);
   px(c, '#99856c', x, y + h, w, 9);
+  px(c, '#ab977c', x + 4, y + h + 2, w - 8, 2);
+  px(c, '#726756', x + w - 27, y + h + 5, 15, 1);
   px(c, '#475766', x + 3, y + h + 9, 5, 8);
   px(c, '#475766', x + w - 8, y + h + 9, 5, 8);
   px(c, '#b2c9ce', x - 3, y - 5, w + 6, 3);
@@ -87,15 +99,39 @@ function wall(c, x, y, w, h) {
   px(c, '#718b96', x, y + 3, w, 3);
 }
 function label(c, t, x, y) {
-  text(c, t, x, y, '#b2b2be', 7);
+  c.font = 'bold 8px system-ui';
+  px(c, '#142132b8', x - 4, y - 10, c.measureText(t).width + 8, 14);
+  text(c, t, x, y, '#c3cdd3', 8);
 }
 export function scene(c, now) {
   px(c, '#090b13', 0, 0, 720, 532);
-  drawCheckers(c, 8, 8, 232, 207, '#2c2e44', '#242638');
-  drawCheckers(c, 240, 8, 474, 207, '#d4d8d0', '#c4c8c0');
-  drawCheckers(c, 8, 215, 706, 175, '#2e2e36', '#262628');
-  drawCheckers(c, 8, 390, 372, 142, '#d8d0c4', '#c6beb2');
-  drawCheckers(c, 380, 390, 334, 142, '#2c2638', '#24202e');
+  // Quiet floors give the small furniture and characters more contrast.
+  drawCheckers(c, 8, 8, 232, 207, '#32394b', '#303748', 32);
+  drawCheckers(c, 240, 8, 474, 207, '#b3c2bb', '#adbbb5', 32);
+  drawCheckers(c, 8, 215, 706, 175, '#343e48', '#323c46', 32);
+  drawCheckers(c, 8, 390, 372, 142, '#baaf9c', '#b2a793', 24);
+  drawCheckers(c, 380, 390, 334, 142, '#3b354c', '#383249', 32);
+  // Floor rugs and circulation strips are decoration, not obstacles.
+  rug(c, 63, 74, 123, 99, '#535b70', '#818a9d');
+  rug(c, 281, 77, 312, 110, '#91a7a0', '#d0d8c7');
+  rug(c, 246, 258, 278, 99, '#3f505d', '#607483');
+  rug(c, 563, 413, 121, 78, '#665474', '#9b82a6');
+  px(c, '#97aeb00b', 12, 348, 696, 34);
+  // Recessed wall shadows anchor the rooms without darkening the furniture.
+  for (const [x, y, w, h] of [
+    [10, 11, 225, 197],
+    [242, 11, 466, 197],
+    [10, 217, 698, 168],
+    [10, 395, 366, 129],
+    [385, 395, 323, 129],
+  ]) {
+    px(c, '#07131e22', x, y, w, 8);
+    px(c, '#07131e15', x, y + 8, w, 5);
+    px(c, '#07131e18', x, y, 5, h);
+  }
+  // Soft, stepped daylight on the conference carpet.
+  for (let i = 0; i < 4; i++)
+    px(c, '#eff5cf0b', 252 + i * 6, 18 + i * 10, 92, 64 - i * 8);
   // Wall-mounted details, furniture, and their shallow pixel depth.
   px(c, '#3b4357', 21, 22, 66, 35);
   px(c, '#8797a6', 24, 24, 60, 29);
@@ -280,9 +316,6 @@ export function scene(c, now) {
   chair(c, 452, 484);
   text(c, '✦  ✧  ✦', 455, 413, '#d4af72', 13, 'center');
   drawCouch(c, 578, 428, 90);
-  px(c, '#51425f', 578, 476, 92, 30);
-  px(c, '#796080', 582, 480, 84, 22);
-  for (let i = 0; i < 6; i++) px(c, '#9b829e', 587 + i * 13, 491, 6, 2);
   text(c, 'ryan was here', 634, 408, '#655670', 7, 'center');
   plant(c, 693, 503);
   // Architectural frame and openings.
@@ -315,10 +348,29 @@ export function scene(c, now) {
     c.arc(x, y, 32, 0, -Math.PI / 2, true);
     c.stroke();
   }
+  windowPanel(c, 258, 3, 83);
+  windowPanel(c, 558, 3, 83);
   label(c, 'MICHAEL’S OFFICE', 19, 199);
   text(c, 'CONFERENCE ROOM', 690, 199, '#657479', 7, 'right');
   label(c, 'RECEPTION', 56, 371);
   label(c, 'SALES', 365, 371);
-  text(c, 'BREAK ROOM', 21, 520, '#747478', 7);
+  label(c, 'BREAK ROOM', 45, 520);
   label(c, 'THE ANNEX', 399, 517);
+}
+
+function windowPanel(c, x, y, w) {
+  px(c, '#233b4c', x - 2, y, w + 4, 13);
+  px(c, '#7fa4b2', x, y + 1, w, 9);
+  px(c, '#b9d6d6', x + 2, y + 2, w - 4, 3);
+  for (let i = 18; i < w; i += 21) px(c, '#3e5969', x + i, y, 2, 11);
+  px(c, '#cee0d9', x - 2, y + 11, w + 4, 2);
+}
+
+// Only these tiny accents need to be redrawn on each animation frame.
+export function sceneAccents(c, now) {
+  px(c, '#7c8994', 590, 305, 35, 10);
+  px(c, '#ebe9dc', 596, 305, 23, 5 + Math.round(Math.sin(now / 450) * 3));
+  px(c, Math.sin(now / 350) > 0 ? '#91d29e' : '#48705a', 624, 284, 4, 3);
+  px(c, `hsl(${Math.floor(now / 65) % 360},25%,54%)`, 195, 412, 28, 16);
+  text(c, 'DVD', 208, 421, '#dae5db', 5, 'center');
 }
