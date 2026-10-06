@@ -51,6 +51,10 @@ Run `npm run format` after editing. GitHub Actions runs these checks on pushes a
 
 ## Hosting
 
-Upload the contents of `dist/` to a static host. Vite uses relative asset URLs to support subdirectory hosting. No environment variables or backend are required. This repository does not automatically publish to the separate ChatGPT Site.
+For GitHub Pages, open repository **Settings → Pages** and set **Source** to **GitHub Actions**. Then open **Actions → Deploy to GitHub Pages → Run workflow** and select `main`. Subsequent pushes to `main` build, test, and deploy automatically.
+
+The expected address is https://dalecri.github.io/Office-Kanban-Board/ (unless a custom domain is configured). The workflow publishes only `dist/`, not the source tree. Tasks remain browser-local; saved tasks from the ChatGPT Site do not automatically transfer to the GitHub Pages origin.
+
+For another static host, upload the contents of `dist/`. Vite uses relative asset URLs to support subdirectory hosting. No environment variables or backend are required. This repository does not automatically publish to the separate ChatGPT Site.
 
 This is an unofficial fan project inspired by The Office; it is not affiliated with the show or its owners.
