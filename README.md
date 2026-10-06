@@ -1,0 +1,56 @@
+# The Office / Paperwork
+
+A pixel-art office simulation driven by a four-column Kanban board. Michael, Dwight, Jim, Pam, and Kelly work, meet, take breaks, and celebrate as their assigned tasks change.
+
+## Run locally
+
+Requires Node.js 22.12 or newer.
+
+```sh
+npm ci
+npm run dev
+```
+
+Open the local URL printed by Vite. Use `npm run build` to create `dist/`, then `npm run preview` to inspect the production build. Serve this app over HTTP; do not open `index.html` directly as a file.
+
+## Use the app
+
+- Create tasks with **New Task** or a column's **+** button.
+- Click a card to edit its title, notes, priority, assignee, or column.
+- Drag cards between columns on desktop. On touchscreens, select a column in the task editor.
+- Hover a colleague, tap their character, or select their roster entry to inspect tasks.
+- Collapse the board or pause the simulation using the header and scene controls.
+
+Tasks save to IndexedDB in the current browser. Six example tasks appear only when no saved board exists. The original `scranton-paperwork` database and `tasks` key are retained, so existing tasks survive when served from the same origin. A different domain or port has separate browser storage. There is no account, server, or cross-device synchronization.
+
+## Project structure
+
+| Location               | Responsibility                                                         |
+| ---------------------- | ---------------------------------------------------------------------- |
+| `index.html`           | Semantic page shell and task dialog                                    |
+| `src/main.js`          | App startup and wiring                                                 |
+| `src/config.js`        | Columns and priority colours                                           |
+| `src/state.js`         | Task state, initial examples, character definitions                    |
+| `src/storage.js`       | IndexedDB loading and serialized saves                                 |
+| `src/tasks.js`         | Notify the UI and characters of task changes                           |
+| `src/ui/`              | Board, task editor, inspector, DOM helpers                             |
+| `src/office/`          | Scene artwork, character rendering, routing, behaviour, animation loop |
+| `src/styles.css`       | Theme and responsive layouts                                           |
+| `tests/`               | Routing and character behaviour regression tests                       |
+| `docs/architecture.md` | Data flow and extension notes                                          |
+
+## Development checks
+
+```sh
+npm test
+npm run build
+npm run format:check
+```
+
+Run `npm run format` after editing. GitHub Actions runs these checks on pushes and pull requests. Production assets are generated from source and are not committed.
+
+## Hosting
+
+Upload the contents of `dist/` to a static host. Vite uses relative asset URLs to support subdirectory hosting. No environment variables or backend are required. This repository does not automatically publish to the separate ChatGPT Site.
+
+This is an unofficial fan project inspired by The Office; it is not affiliated with the show or its owners.

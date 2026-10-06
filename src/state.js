@@ -1,0 +1,111 @@
+export const AGENTS = [
+  {
+    name: 'Michael',
+    shirt: '#7593d0',
+    hair: '#49352e',
+    skin: '#e8b790',
+    pants: '#343547',
+  },
+  {
+    name: 'Dwight',
+    shirt: '#c9ad59',
+    hair: '#79512d',
+    skin: '#ebc39b',
+    pants: '#554932',
+  },
+  {
+    name: 'Jim',
+    shirt: '#a2c8d7',
+    hair: '#664332',
+    skin: '#ecc8a7',
+    pants: '#3d4658',
+  },
+  {
+    name: 'Pam',
+    shirt: '#d99aab',
+    hair: '#aa7047',
+    skin: '#f0c8ae',
+    pants: '#5b4c62',
+    female: true,
+  },
+  {
+    name: 'Kelly',
+    shirt: '#d868a3',
+    hair: '#302b36',
+    skin: '#bd8769',
+    pants: '#4c344f',
+    female: true,
+  },
+].map((a, i) => ({
+  ...a,
+  id: i,
+  x: 180 + i * 81,
+  y: 353,
+  tx: 180 + i * 81,
+  ty: 353,
+  state: 'idle',
+  pendingState: 'idle',
+  dir: 'down',
+  frame: 0,
+  waypoints: [],
+  stateTimer: 20 + i * 25,
+  bubble: '',
+  bubbleTimer: 0,
+  submittedTasks: new Set(),
+  pamSitMs: 0,
+}));
+export const seed = [
+  {
+    id: '1',
+    title: 'Plan the next office party',
+    agent: 0,
+    col: 'todo',
+    priority: 'medium',
+    note: '',
+  },
+  {
+    id: '2',
+    title: 'Order a suspicious amount of paper',
+    agent: null,
+    col: 'todo',
+    priority: 'low',
+    note: '',
+  },
+  {
+    id: '3',
+    title: 'Review the quarterly sales report',
+    agent: 1,
+    col: 'pending',
+    priority: 'high',
+    note: 'Awaiting the regional manager’s approval.',
+  },
+  {
+    id: '4',
+    title: 'Follow up with the new client',
+    agent: 2,
+    col: 'doing',
+    priority: 'high',
+    note: '',
+  },
+  {
+    id: '5',
+    title: 'Update the reception directory',
+    agent: 3,
+    col: 'doing',
+    priority: 'medium',
+    note: '',
+  },
+  {
+    id: '6',
+    title: 'Resolve customer support tickets',
+    agent: 4,
+    col: 'done',
+    priority: 'low',
+    note: '',
+  },
+];
+export let tasks = [];
+export function setTasks(next) {
+  tasks = next;
+}
+export const ui = { paused: false, selected: null };
