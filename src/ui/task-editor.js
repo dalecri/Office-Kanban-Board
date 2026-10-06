@@ -1,6 +1,7 @@
 import { $, toast } from './dom.js';
 import { tasks, setTasks, AGENTS } from '../state.js';
 import { COLS, PRIOR } from '../config.js';
+import { setMobileView, isMobile } from './mobile.js';
 import { changed } from '../tasks.js';
 let editing = null,
   draft = {};
@@ -11,6 +12,7 @@ function choices(id, values, key) {
     b.type = 'button';
     b.textContent = label;
     b.className = value === draft[key] ? 'active' : '';
+    b.setAttribute('aria-pressed', String(value === draft[key]));
     if (color) b.style.boxShadow = `inset 0 -2px ${color}`;
     b.onclick = () => {
       draft[key] = value;
@@ -48,6 +50,7 @@ export function openTask(id = null, col = 'todo') {
     }),
   };
   $('modalTitle').textContent = id ? 'Edit task' : 'New task';
+  $('taskTitle').setCustomValidity('');
   $('taskTitle').value = draft.title;
   $('note').value = draft.note;
   $('delete').hidden = !id;
@@ -55,7 +58,7 @@ export function openTask(id = null, col = 'todo') {
   drawChoices();
   $('tooltip').hidden = true;
   $('modal').showModal();
-  $('taskTitle').focus();
+  if (!isMobile() || !id) $('taskTitle').focus();
 }
 
 export function initTaskEditor() {
@@ -89,6 +92,10 @@ export function initTaskEditor() {
     };
     if (editing) setTasks(tasks.map((x) => (x.id === editing ? t : x)));
     else tasks.push(t);
+    if (isMobile()) {
+      $('board').dataset.activeColumn = t.col;
+      setMobileView('tasks');
+    }
     changed();
     $('modal').close();
   };
@@ -100,6 +107,12 @@ export function initTaskEditor() {
     toast('Task deleted');
   };
   function toggleBoard() {
+    if (isMobile()) {
+      setMobileView(
+        document.body.dataset.mobileView === 'office' ? 'tasks' : 'office',
+      );
+      return;
+    }
     const closed = $('drawer').classList.toggle('closed');
     $('toggle').setAttribute('aria-expanded', !closed);
   }

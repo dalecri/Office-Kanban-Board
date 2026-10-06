@@ -20,6 +20,9 @@ Open the local URL printed by Vite. Use `npm run build` to create `dist/`, then 
 - Drag cards between columns on desktop. On touchscreens, select a column in the task editor.
 - Hover a colleague, tap their character, or select their roster entry to inspect tasks.
 - Collapse the board or pause the simulation using the header and scene controls.
+- On phones, switch between **Office** and **Tasks** using the bottom navigation. Select a column above the full-width task cards.
+- Use **Zoom** to explore the office by scrolling, then **Fit office** to see the complete floor plan. Tap any of the five colleagues below the scene to inspect their work.
+- The mobile editor opens as a bottom sheet; saving a task takes you to its column.
 
 Tasks save to IndexedDB in the current browser. Six example tasks appear only when no saved board exists. The original `scranton-paperwork` database and `tasks` key are retained, so existing tasks survive when served from the same origin. A different domain or port has separate browser storage. There is no account, server, or cross-device synchronization.
 

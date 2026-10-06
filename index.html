@@ -2,12 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <meta name="theme-color" content="#0e0e18" />
     <title>Paperwork · The Office</title>
     <link rel="stylesheet" href="./src/styles.css" />
   </head>
-  <body>
+  <body data-mobile-view="office">
     <header>
       <div class="brand">DM</div>
       <div>
@@ -48,6 +51,9 @@
             </div>
           </div>
           <div class="scene-foot">
+            <button id="zoom" class="mobile-only" aria-pressed="false">
+              ＋ Zoom
+            </button>
             <button id="pause">Ⅱ Pause</button
             ><span id="activity">Everyone is settling in.</span
             ><span class="hint">Hover a colleague to see their work</span>
@@ -60,7 +66,12 @@
             ><button id="closeBoard" aria-label="Collapse task board">›</button>
           </div>
           <div class="board-sub">A productive day in Scranton. Probably.</div>
-          <div class="board" id="board"></div>
+          <nav
+            id="columnTabs"
+            class="column-tabs"
+            aria-label="Task columns"
+          ></nav>
+          <div class="board" id="board" data-active-column="todo"></div>
           <div class="board-footer">
             <span id="complete"></span>
             <div class="progress"><i id="progress"></i></div>
@@ -70,6 +81,14 @@
       <footer class="roster" id="roster">
         <div class="roster-label">THE TEAM<br />5 IN THE OFFICE</div>
       </footer>
+      <nav class="mobile-nav" aria-label="Workspace views">
+        <button id="officeView" aria-pressed="true">
+          ▦ <span>Office</span>
+        </button>
+        <button id="tasksView" aria-pressed="false">
+          ▥ <span>Tasks</span><span id="mobileTaskCount" class="count">0</span>
+        </button>
+      </nav>
     </main>
     <div id="tooltip" class="tooltip" hidden></div>
     <div id="toast" class="toast" role="status" hidden></div>

@@ -1,3 +1,4 @@
+import { initMobile } from './ui/mobile.js';
 import { $ } from './ui/dom.js';
 import { ui } from './state.js';
 import { init } from './storage.js';
@@ -9,6 +10,7 @@ import { startSimulation } from './office/simulation.js';
 async function main() {
   await init();
   renderBoard();
+  initMobile();
   initTaskEditor();
   initInspector();
   document.addEventListener('taskschange', renderBoard);

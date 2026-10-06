@@ -1,3 +1,4 @@
+import { isMobile } from './mobile.js';
 import { $, esc } from './dom.js';
 import { tasks, AGENTS, ui } from '../state.js';
 import { COLS, PRIOR } from '../config.js';
@@ -34,7 +35,9 @@ export function initInspector() {
       scale = Math.min(r.width / 720, r.height / 532),
       x = (e.clientX - r.left - (r.width - 720 * scale) / 2) / scale,
       y = (e.clientY - r.top - (r.height - 532 * scale) / 2) / scale;
-    return AGENTS.find((a) => Math.hypot(a.x - x, a.y - 18 - y) < 22);
+    return AGENTS.find(
+      (a) => Math.hypot(a.x - x, a.y - 18 - y) < (isMobile() ? 32 : 22),
+    );
   }
   canvas.onpointermove = (e) => {
     if (e.pointerType === 'touch') return;
@@ -42,8 +45,8 @@ export function initInspector() {
     if (a) tip(a, e.clientX, e.clientY);
     else $('tooltip').hidden = true;
   };
-  canvas.onpointerleave = () => {
-    $('tooltip').hidden = true;
+  canvas.onpointerleave = (e) => {
+    if (e.pointerType !== 'touch') $('tooltip').hidden = true;
   };
   canvas.onclick = (e) => {
     const a = hit(e);
@@ -70,6 +73,15 @@ export function initInspector() {
       } else $('tooltip').hidden = true;
     };
     $('roster').append(b);
+  });
+  document.addEventListener('pointerdown', (e) => {
+    if (!e.target.closest('.person, #scene, #tooltip')) {
+      $('tooltip').hidden = true;
+      ui.selected = null;
+      document
+        .querySelectorAll('.person')
+        .forEach((x) => x.classList.remove('selected'));
+    }
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
